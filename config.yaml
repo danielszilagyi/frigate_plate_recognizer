@@ -5,4 +5,3 @@ slug: "frigate_alpr"
 init: false
 arch:
   - amd64
-image: lmerza/frigate_plate_recognizer:latest
