@@ -1,0 +1,8 @@
+name: "Frigate Plate Recognizer"
+description: "Tags license plates with ALPR"
+version: "1.0.0"
+slug: "frigate_alpr"
+init: false
+arch:
+  - amd64
+image: repo/{arch}lmerza/frigate_plate_recognizer:latest
