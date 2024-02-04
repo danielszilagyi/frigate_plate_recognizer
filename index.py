@@ -26,7 +26,7 @@ VERSION = '1.8.8'
 CONFIG_PATH = '/data/config.yml'
 DB_PATH = '/data/frigate_plate_recogizer.db'
 LOG_FILE = '/data/frigate_plate_recogizer.log'
-SNAPSHOT_PATH = '/plates'
+SNAPSHOT_PATH = '/data/plates'
 
 DATETIME_FORMAT = "%Y-%m-%d_%H-%M-%S"
 
