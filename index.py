@@ -12,6 +12,7 @@ import yaml
 import sys
 import json
 import requests
+import threading
 
 import io
 from PIL import Image, ImageDraw, UnidentifiedImageError, ImageFont
@@ -33,6 +34,14 @@ DATETIME_FORMAT = "%Y-%m-%d_%H-%M-%S"
 PLATE_RECOGIZER_BASE_URL = 'https://api.platerecognizer.com/v1/plate-reader'
 DEFAULT_OBJECTS = ['car', 'motorcycle', 'bus']
 
+# Rate limiting parameters
+RATE_LIMIT_INTERVAL = 60  # 60 seconds interval
+MAX_CALLS_PER_INTERVAL = 5  # 5 calls per interval
+
+# Lock for thread safety
+rate_limit_lock = threading.Lock()
+last_call_time = 0
+call_count = 0
 
 def on_connect(mqtt_client, userdata, flags, rc):
     _LOGGER.info("MQTT Connected")
@@ -98,6 +107,31 @@ def code_project(image):
     return plate_number, score
 
 def plate_recognizer(image):
+    global last_call_time
+    global call_count
+
+    with rate_limit_lock:
+        current_time = time.time()
+
+        # Check if the interval has passed
+        if current_time - last_call_time >= RATE_LIMIT_INTERVAL:
+            last_call_time = current_time
+            call_count = 0  # Reset call count
+
+        # Check if we exceeded the maximum calls for the interval
+        if call_count >= MAX_CALLS_PER_INTERVAL:
+            # Wait until the next interval
+            sleep_time = last_call_time + RATE_LIMIT_INTERVAL - current_time
+            if sleep_time > 0:
+                time.sleep(sleep_time)
+                current_time = time.time()  # Update current time after sleep
+
+            # Reset call count and last call time
+            last_call_time = current_time
+            call_count = 0
+
+        call_count += 1
+
     api_url = config['plate_recognizer'].get('api_url') or PLATE_RECOGIZER_BASE_URL
     token = config['plate_recognizer']['token']
 
