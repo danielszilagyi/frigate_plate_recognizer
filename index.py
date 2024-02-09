@@ -105,6 +105,7 @@ def plate_recognizer(image):
     with api_call_lock:
         time_since_last_call = time.time() - last_api_call_time
         if time_since_last_call < 2:
+            _LOGGER.warning("Rate limit reached. Waiting before making another API call.")
             time.sleep(2 - time_since_last_call)
         # Update the last_api_call_time variable
         last_api_call_time = time.time()
