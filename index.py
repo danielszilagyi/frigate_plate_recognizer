@@ -6,15 +6,14 @@ import os
 import sqlite3
 import time
 import logging
-
-import paho.mqtt.client as mqtt
+import threading
 import yaml
 import sys
 import json
 import requests
-
 import io
 from PIL import Image, ImageDraw, UnidentifiedImageError, ImageFont
+import paho.mqtt.client as mqtt
 
 mqtt_client = None
 config = None
@@ -33,6 +32,10 @@ DATETIME_FORMAT = "%Y-%m-%d_%H-%M-%S"
 PLATE_RECOGIZER_BASE_URL = 'https://api.platerecognizer.com/v1/plate-reader'
 DEFAULT_OBJECTS = ['car', 'motorcycle', 'bus']
 
+# Define a global variable to keep track of the last time the API was called
+last_api_call_time = 0
+# Define a lock to ensure thread safety when updating the last_api_call_time variable
+api_call_lock = threading.Lock()
 
 def on_connect(mqtt_client, userdata, flags, rc):
     _LOGGER.info("MQTT Connected")
@@ -64,7 +67,6 @@ def set_sublabel(frigate_url, frigate_event_id, sublabel, score):
     payload = { "subLabel": sublabel }
     headers = { "Content-Type": "application/json" }
     response = requests.post(post_url, data=json.dumps(payload), headers=headers)
-
 
     percentscore = "{:.1%}".format(score)
 
@@ -98,6 +100,16 @@ def code_project(image):
     return plate_number, score
 
 def plate_recognizer(image):
+    global last_api_call_time
+    # Wait until the minimum interval (2 seconds) has passed since the last API call
+    with api_call_lock:
+        time_since_last_call = time.time() - last_api_call_time
+        if time_since_last_call < 2:
+            _LOGGER.warning("Rate limit reached. Waiting before making another API call.")
+            time.sleep(2 - time_since_last_call)
+        # Update the last_api_call_time variable
+        last_api_call_time = time.time()
+
     api_url = config['plate_recognizer'].get('api_url') or PLATE_RECOGIZER_BASE_URL
     token = config['plate_recognizer']['token']
 
@@ -352,7 +364,6 @@ def on_message(client, userdata, message):
 
     send_mqtt_message(plate_number, plate_score, frigate_event_id, after_data, formatted_start_time)
 
-
 def setup_db():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -436,7 +447,6 @@ def main():
         _LOGGER.info(f"Using Plate Recognizer API")
     else:
         _LOGGER.info(f"Using CodeProject.AI API")
-
 
     run_mqtt_client()
 
