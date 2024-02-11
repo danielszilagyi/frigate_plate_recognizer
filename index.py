@@ -23,6 +23,7 @@ _LOGGER = None
 
 VERSION = '1.8.10'
 
+# CONFIG_PATH is also used in by the HA addons internally so had to rename it here. Also getting these from the environment and providing a default.
 OWN_CONFIG_PATH = os.getenv('OWN_CONFIG_PATH', '/config/config.yml')
 DB_PATH = os.getenv('DB_PATH', '/config/frigate_plate_recogizer.db')
 LOG_FILE = os.getenv('LOG_FILE', '/config/frigate_plate_recogizer.log')
