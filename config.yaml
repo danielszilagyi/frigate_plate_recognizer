@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer - testing"
 description: "Tags license plates with ALPR"
-version: "1.0.3d"
+version: "1.0.3e"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -34,7 +34,7 @@ options:
     enabled: false
 
 schema:
-  logger_level: list(DEBUG|INFO|WARN|ERROR|CRITICAL)?
+  log_level: list(DEBUG|INFO|WARN|ERROR|CRITICAL)?
   configpath: str?
   dbpath: str?
   logfile: str?
