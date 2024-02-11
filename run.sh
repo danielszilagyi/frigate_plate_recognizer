@@ -21,6 +21,7 @@ export main_topic="$(bashio::config 'frigate.main_topic')"
 export return_topic="$(bashio::config 'frigate.return_topic')"
 export frigate_plus="$(bashio::config 'frigate.frigate_plus')"
 export min_score="$(bashio::config 'frigate.min_score')"
+export always_save_snapshot="$(bashio::config 'frigate.always_save_snapshot')"
 export save_snapshots="$(bashio::config 'frigate.save_snapshots')"
 export draw_box="$(bashio::config 'frigate.draw_box')"
 export pr_token="$(bashio::config 'plate_recognizer.token')"
@@ -53,6 +54,13 @@ yq --inplace e '.frigate.objects = []' "${OWN_CONFIG_PATH}"
     obj="${obj}" yq --inplace e \
       '.frigate.objects += [env(obj)]' "${OWN_CONFIG_PATH}" \
         || bashio::exit.nok 'Failed updating object list'
+  done
+
+yq --inplace e '.frigate.watched_plates = []' "${OWN_CONFIG_PATH}"
+  for plate in "${watched_plates[@]}"; do
+    plate="${plate}" yq --inplace e \
+      '.frigate.watched_plates += [env(plate)]' "${OWN_CONFIG_PATH}" \
+        || bashio::exit.nok 'Failed updating watched plates list'
   done
 
 yq --inplace e '.frigate.mqtt_server = env(mqtt_server)' "${OWN_CONFIG_PATH}"
