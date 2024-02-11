@@ -3,15 +3,12 @@ FROM ${BUILD_FROM}
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev freetype-dev yq
+COPY index.py Arial.ttf run.sh requirements.txt /usr/src/app/
 
-
-COPY index.py .
-COPY Arial.ttf .
-COPY run.sh .
-COPY requirements.txt .
-RUN chmod a+x ./run.sh
-RUN pip install -r requirements.txt --no-cache-dir
+RUN \
+    apk add --no-cache gcc zlib-dev jpeg-dev musl-dev freetype-dev yq \
+    && chmod a+x ./run.sh \
+    && pip install -r requirements.txt --no-cache-dir 
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
