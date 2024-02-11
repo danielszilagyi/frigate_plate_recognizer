@@ -7,12 +7,10 @@ arch:
   - aarch64
   - amd64
   - armv7
+map:
+  - addon_config:rw
 options:
   log_level: INFO
-  configpath: /data/config.yml
-  dbpath: /data/frigate_plate_recognizer.db
-  logfile: /data/frigate_plate_recognizer.log
-  snapshotpath: /data/plates
   frigate_url: ""
   mqtt_auth: true
   camera: []

@@ -2,11 +2,11 @@
 
 CONFIG_PATH=/data/options.json
 
-# Set up env variables for index.py
-export OWN_CONFIG_PATH="$(bashio::config 'configpath')"
-export DB_PATH="$(bashio::config 'dbpath')"
-export LOG_FILE="$(bashio::config 'logfile')"
-export SNAPSHOT_PATH="$(bashio::config 'snapshotpath')"
+# Set up env variables for index.py, use shared addon_data for now (same path with app originally)
+export OWN_CONFIG_PATH="/config/config.yml"
+export DB_PATH="/config/frigate_plate_recognizer.db"
+export LOG_FILE="/config/frigate_plate_recognizer.log"
+export SNAPSHOT_PATH="/config/plates"
 
 export log_level="$(bashio::config 'log_level')"
 export frigate_url="$(bashio::config 'frigate_url')"
