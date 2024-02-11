@@ -22,10 +22,10 @@ _LOGGER = None
 
 VERSION = '1.8.8'
 
-CONFIG_PATH = '/data/config.yml'
-DB_PATH = '/data/frigate_plate_recogizer.db'
-LOG_FILE = '/data/frigate_plate_recogizer.log'
-SNAPSHOT_PATH = '/data/plates'
+OWN_CONFIG_PATH = os.getenv('OWN_CONFIG_PATH', '/config/config.yml')
+DB_PATH = os.getenv('DB_PATH', '/config/frigate_plate_recogizer.db')
+LOG_FILE = os.getenv('LOG_FILE', '/config/frigate_plate_recogizer.log')
+SNAPSHOT_PATH = os.getenv('SNAPSHOT_PATH','/plates')
 
 DATETIME_FORMAT = "%Y-%m-%d_%H-%M-%S"
 
@@ -382,7 +382,7 @@ def setup_db():
 
 def load_config():
     global config
-    with open(CONFIG_PATH, 'r') as config_file:
+    with open(OWN_CONFIG_PATH, 'r') as config_file:
         config = yaml.safe_load(config_file)
 
     if SNAPSHOT_PATH:

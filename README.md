@@ -1,3 +1,10 @@
+# Fork information
+
+This is a fork of the [ljmerza/frigate_plate_recognizer](https://github.com/ljmerza/frigate_plate_recognizer) repository, modified to be usable as an add-on with Home Assistant Operating System. 
+
+The addon options might be improved later, currently they are only used to pass the necessary paths to the script. Putting all the options to yaml and creating the file before the start is highly dependent on my free time.
+Until that, please note that the config.yml file needs to be placed manually in the addon data directory before the addon can be started. There is also a modification to never call the Plate Recognizer API more frequently than 2 sec as I saw API errors with rate limited to 1 second.
+
 # Frigate Plate Recognizer
 
 Identify license plates via [Plate Recognizer](https://guides.platerecognizer.com/) or [CodeProject.AI](https://www.codeproject.com/) and add them as sublabels to [blakeblackshear/frigate](https://github.com/blakeblackshear/frigate)

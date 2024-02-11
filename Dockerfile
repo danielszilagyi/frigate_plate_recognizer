@@ -1,13 +1,16 @@
-FROM python:3.9
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev freetype-dev
 
 COPY index.py .
 COPY Arial.ttf .
-
+COPY run.sh .
+COPY requirements.txt .
+RUN chmod a+x ./run.sh
+RUN pip install -r requirements.txt --no-cache-dir
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
@@ -30,5 +33,4 @@ LABEL \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
 
-ENTRYPOINT  ["python"]
-CMD ["./index.py"]
+CMD ["./run.sh"]
