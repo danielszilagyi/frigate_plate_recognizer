@@ -92,4 +92,4 @@ fi
 
 # start the app
 cd /usr/src/app
-python ./index.py
+python ./index2.py
