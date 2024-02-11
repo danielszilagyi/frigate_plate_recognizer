@@ -9,14 +9,14 @@ export LOG_FILE="$(bashio::config 'logfile')"
 export SNAPSHOT_PATH="$(bashio::config 'snapshotpath')"
 
 export log_level="$(bashio::config 'log_level')"
-export frigate_url="$(bashio::config 'frigate.frigate_url')"
+export frigate_url="$(bashio::config 'frigate_url')"
 declare -a camera
-camera+=($(bashio::config 'frigate.camera'))
+camera+=($(bashio::config 'camera'))
 declare -a objects
-objects+=($(bashio::config 'frigate.objects'))
-export mqtt_username="$(bashio::config 'frigate.mqtt_username')"
-export mqtt_password="$(bashio::config 'frigate.mqtt_password')"
-export mqtt_server="$(bashio::config 'frigate.mqtt_server')"
+objects+=($(bashio::config 'objects'))
+export mqtt_username="$(bashio::config 'mqtt_username')"
+export mqtt_password="$(bashio::config 'mqtt_password')"
+export mqtt_server="$(bashio::config 'mqtt_server')"
 export main_topic="$(bashio::config 'frigate.main_topic')"
 export return_topic="$(bashio::config 'frigate.return_topic')"
 export frigate_plus="$(bashio::config 'frigate.frigate_plus')"
@@ -54,7 +54,7 @@ yq --inplace e '.frigate.objects = []' "${OWN_CONFIG_PATH}"
 
 yq --inplace e '.frigate.mqtt_server = env(mqtt_server)' "${OWN_CONFIG_PATH}"
 
-if $(bashio::config 'frigate.mqtt_auth'); then
+if $(bashio::config 'mqtt_auth'); then
     
     yq --inplace e '.frigate.mqtt_auth = true' "${OWN_CONFIG_PATH}"
     yq --inplace e '.frigate.mqtt_username = env(mqtt_username)' "${OWN_CONFIG_PATH}"

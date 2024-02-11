@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer - testing"
 description: "Tags license plates with ALPR"
-version: "1.0.3n"
+version: "1.0.3o"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -8,21 +8,22 @@ arch:
   - amd64
   - armv7
 options:
+  log_level: INFO
   configpath: /data/config.yml
   dbpath: /data/frigate_plate_recognizer.db
   logfile: /data/frigate_plate_recognizer.log
   snapshotpath: /data/plates
+  frigate_url: ""
+  mqtt_auth: true
+  camera: []
+  objects: []
+  mqtt_username: ""
+  mqtt_password: ""
+  mqtt_server: ""
   frigate:
-    frigate_url: ""
-    mqtt_auth: true
-    mqtt_username: ""
-    mqtt_password: ""
-    mqtt_server: ""
     main_topic: frigate
     return_topic: plate_recognizer
     frigate_plus: ""
-    camera: []
-    objects: []
     min_score: .8
     save_snapshots: true
     draw_box: true
@@ -32,26 +33,20 @@ options:
     regions: []
   code_project:
     enabled: false
-
 schema:
-  log_level: list(DEBUG|INFO|WARN|ERROR|CRITICAL)?
-  configpath: str?
-  dbpath: str?
-  logfile: str?
-  snapshotpath: str?
+  frigate_url: url
+  mqtt_server: str
+  mqtt_auth: bool
+  mqtt_username: str?
+  mqtt_password: password?
+  camera: 
+      - str
+  objects:
+      - str
   frigate:
-    frigate_url: url
-    mqtt_auth: bool
-    mqtt_username: str?
-    mqtt_password: str?
-    mqtt_server: str
     main_topic: str?
     return_topic: str?
     frigate_plus: bool?
-    camera: 
-      - str
-    objects:
-      - str
     min_score: float?
     save_snapshots: bool?
     draw_box: bool?
