@@ -1,0 +1,6 @@
+logger_level: DEBUG
+frigate:
+  frigate_url: ""
+  mqtt_server: ""
+  mqtt_auth: false
+  cameras: 
