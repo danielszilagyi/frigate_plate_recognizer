@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer - testing"
 description: "Tags license plates with ALPR"
-version: "1.0.3p"
+version: "1.0.4"
 slug: "frigate_alpr"
 init: false
 arch:
