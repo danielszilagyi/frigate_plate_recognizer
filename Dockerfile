@@ -3,7 +3,7 @@ FROM ${BUILD_FROM}
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev freetype-dev
+RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev freetype-dev yq
 
 COPY index.py .
 COPY Arial.ttf .
