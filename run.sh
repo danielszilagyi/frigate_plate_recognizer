@@ -54,7 +54,7 @@ yq --inplace e '.frigate.objects = []' "${OWN_CONFIG_PATH}"
 
 yq --inplace e '.frigate.mqtt_server = env(mqtt_server)' "${OWN_CONFIG_PATH}"
 
-if $(bashio::var.true 'frigate.mqtt_auth'); then
+if $(bashio::config 'frigate.mqtt_auth'); then
 
     yq --inplace e '.frigate.mqtt_username = env(mqtt_username)' "${OWN_CONFIG_PATH}"
     yq --inplace e '.frigate.mqtt_password = env(mqtt_password)' "${OWN_CONFIG_PATH}"
@@ -65,7 +65,7 @@ yq --inplace e '.frigate.main_topic = env(main_topic)' "${OWN_CONFIG_PATH}"
 yq --inplace e '.frigate.return_topic = env(return_topic)' "${OWN_CONFIG_PATH}"
 
 if $(bashio::config 'frigate.frigate_plus'); then
-yq --inplace e '.frigate.frigate_plus = "true"' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.frigate_plus = true' "${OWN_CONFIG_PATH}"
 fi
 
 yq --inplace e '.frigate.min_score = env(min_score)' "${OWN_CONFIG_PATH}"
