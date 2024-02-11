@@ -1,4 +1,4 @@
-ARG BUILD_FROM=homeassistant/{BUILD_ARCH}-base-python:latest
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 WORKDIR /usr/src/app
