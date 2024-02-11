@@ -13,11 +13,8 @@ import json
 import requests
 import io
 from PIL import Image, ImageDraw, UnidentifiedImageError, ImageFont
-<<<<<<< HEAD
 import paho.mqtt.client as mqtt
-=======
 import difflib
->>>>>>> upstream/master
 
 mqtt_client = None
 config = None
