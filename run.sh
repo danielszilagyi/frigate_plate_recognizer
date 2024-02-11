@@ -54,7 +54,7 @@ yq --inplace e '.frigate.objects = []' "${OWN_CONFIG_PATH}"
 
 yq --inplace e '.frigate.mqtt_server = "${mqtt_server}"' "${OWN_CONFIG_PATH}"
 
-if bashio::var.true "${frigate.mqtt_auth}"; then
+if $(bashio::var.true 'frigate.mqtt_auth'); then
 
     yq --inplace e '.frigate.mqtt_username = "${mqtt_username}"' "${OWN_CONFIG_PATH}"
     yq --inplace e '.frigate.mqtt_password = "${mqtt_password}"' "${OWN_CONFIG_PATH}"
@@ -64,7 +64,7 @@ fi
 yq --inplace e '.frigate.main_topic = "${main_topic}"' "${OWN_CONFIG_PATH}"
 yq --inplace e '.frigate.return_topic = "${return_topic}"' "${OWN_CONFIG_PATH}"
 
-if bashio::var.true "${frigate.frigate_plus}"; then
+if $(bashio::var.true 'frigate.frigate_plus'); then
 yq --inplace e '.frigate.frigate_plus = "true"' "${OWN_CONFIG_PATH}"
 fi
 
@@ -73,7 +73,7 @@ yq --inplace e '.frigate.save_snapshots = "${save_snapshots}"' "${OWN_CONFIG_PAT
 yq --inplace e '.frigate.draw_box = "${draw_box}"' "${OWN_CONFIG_PATH}"
 
 # Plate recognizer
-if bashio::var.true "${plate_recognizer.enabled}"; then
+if $(bashio::var.true 'plate_recognizer.enabled'); then
 yq --inplace e '.plate_recognizer.token = "${prtoken}"' "${OWN_CONFIG_PATH}"
 yq --inplace e '.plate_recognizer.regions = []' "${OWN_CONFIG_PATH}"
   for reg in "${regions[@]}"; do
@@ -84,7 +84,7 @@ yq --inplace e '.plate_recognizer.regions = []' "${OWN_CONFIG_PATH}"
 fi
 
 # CP.AI
-if bashio::var.true "${code_project.enabled}"; then
+if $(bashio::var.true 'code_project.enabled'); then
 yq --inplace e '.code_project.api_url = "${cpaiurl}"' "${OWN_CONFIG_PATH}"
 fi
 
