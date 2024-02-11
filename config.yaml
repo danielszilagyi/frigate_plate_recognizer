@@ -5,3 +5,14 @@ slug: "frigate_alpr"
 init: false
 arch:
   - amd64
+options:
+  configpath: /data/config.yml
+  dbpath: /data/frigate_plate_recognizer.db
+  logfile: /data/frigate_plate_recognizer.log
+  snapshotpath: /data/plates
+schema:
+  configpath: str
+  dbpath: str?
+  logfile: str?
+  snapshotpath: str?
+

@@ -1,12 +1,16 @@
-FROM python:3.9
+ARG BUILD_FROM=homeassistant/amd64-base-python:latest
+FROM $BUILD_FROM
 
 WORKDIR /usr/src/app
 
 COPY requirements.txt .
+RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev
 RUN pip install -r requirements.txt
 
 COPY index.py .
 COPY Arial.ttf .
+COPY run.sh .
+RUN chmod a+x ./run.sh
 
 ARG BUILD_ARCH
 ARG BUILD_DATE
@@ -30,5 +34,4 @@ LABEL \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
 
-ENTRYPOINT  ["python"]
-CMD ["./index.py"]
+CMD ["./run.sh"]
