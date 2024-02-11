@@ -25,6 +25,9 @@ export save_snapshots="$(bashio::config 'frigate.save_snapshots')"
 export draw_box="$(bashio::config 'frigate.draw_box')"
 export pr_token="$(bashio::config 'plate_recognizer.token')"
 export cpai_url="$(bashio::config 'code_project.api_url')"
+export fuzzy_match="$(bashio::config 'frigate.min_score')"
+declare -a watched_plates
+watched_plates+=($(bashio::config 'watched_plates'))
 declare -a regions
 regions+=($(bashio::config 'plate_recognizer.regions'))
 
@@ -52,6 +55,13 @@ yq --inplace e '.frigate.objects = []' "${OWN_CONFIG_PATH}"
         || bashio::exit.nok 'Failed updating object list'
   done
 
+yq --inplace e '.frigate.watched_plates = []' "${OWN_CONFIG_PATH}"
+  for plate in "${watched_plates[@]}"; do
+    plate="${plate}" yq --inplace e \
+      '.frigate.watched_plates += [env(plate)]' "${OWN_CONFIG_PATH}" \
+        || bashio::exit.nok 'Failed updating watched plates list'
+  done
+
 yq --inplace e '.frigate.mqtt_server = env(mqtt_server)' "${OWN_CONFIG_PATH}"
 
 if $(bashio::config 'mqtt_auth'); then
@@ -70,6 +80,7 @@ yq --inplace e '.frigate.frigate_plus = true' "${OWN_CONFIG_PATH}"
 fi
 
 yq --inplace e '.frigate.min_score = env(min_score)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.always_save_snapshot = env(always_save_snapshot)' "${OWN_CONFIG_PATH}"
 yq --inplace e '.frigate.save_snapshots = env(save_snapshots)' "${OWN_CONFIG_PATH}"
 yq --inplace e '.frigate.draw_box = env(draw_box)' "${OWN_CONFIG_PATH}"
 
@@ -92,4 +103,4 @@ fi
 
 # start the app
 cd /usr/src/app
-python ./index2.py
+python ./index.py
