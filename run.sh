@@ -98,7 +98,7 @@ yq --inplace e '.plate_recognizer.regions = []' "${OWN_CONFIG_PATH}"
 fi
 
 # CP.AI
-if $(bashio::config 'code_project.enabled'); then
+if $(bashio::config 'code_project_enabled'); then
 yq --inplace e '.code_project.api_url = env(cpai_url)' "${OWN_CONFIG_PATH}"
 fi
 
