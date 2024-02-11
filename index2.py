@@ -143,7 +143,7 @@ def check_watched_plates(plate_number, response):
     config_watched_plates = config['frigate'].get('watched_plates', [])
     if not config_watched_plates:
         _LOGGER.debug("Skipping checking Watched Plates because watched_plates is not set")
-        return None, None
+        return None, None, None
     
     config_watched_plates = [str(x).lower() for x in config_watched_plates] #make sure watched_plates are all lower case
     
