@@ -24,13 +24,13 @@ export min_score="$(bashio::config 'frigate.min_score')"
 export always_save_snapshot="$(bashio::config 'frigate.always_save_snapshot')"
 export save_snapshots="$(bashio::config 'frigate.save_snapshots')"
 export draw_box="$(bashio::config 'frigate.draw_box')"
-export pr_token="$(bashio::config 'plate_recognizer.token')"
-export cpai_url="$(bashio::config 'code_project.api_url')"
+export pr_token="$(bashio::config 'plate_recognizer_token')"
+export cpai_url="$(bashio::config 'code_project_api_url')"
 export fuzzy_match="$(bashio::config 'frigate.fuzzy_match')"
 declare -a watched_plates
 watched_plates+=($(bashio::config 'watched_plates'))
 declare -a regions
-regions+=($(bashio::config 'plate_recognizer.regions'))
+regions+=($(bashio::config 'plate_recognizer_regions'))
 
 
 # Put config in its place
@@ -87,7 +87,7 @@ yq --inplace e '.frigate.save_snapshots = env(save_snapshots)' "${OWN_CONFIG_PAT
 yq --inplace e '.frigate.draw_box = env(draw_box)' "${OWN_CONFIG_PATH}"
 
 # Plate recognizer
-if $(bashio::config 'plate_recognizer.enabled'); then
+if $(bashio::config 'plate_recognizer_enabled'); then
 yq --inplace e '.plate_recognizer.token = env(pr_token)' "${OWN_CONFIG_PATH}"
 yq --inplace e '.plate_recognizer.regions = []' "${OWN_CONFIG_PATH}"
   for reg in "${regions[@]}"; do

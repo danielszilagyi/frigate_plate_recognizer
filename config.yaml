@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer"
 description: "Tags license plates with ALPR"
-version: "1.0.8b"
+version: "1.0.9"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -16,6 +16,11 @@ options:
   camera: []
   objects: []
   watched_plates: []
+  plate_recognizer_enabled: true
+  plate_recognizer_regions: []
+  plate_recognizer_token: ""
+  code_project_enabled: false
+  code_project_api_url: ""
   mqtt_username: ""
   mqtt_password: ""
   mqtt_server: ""
@@ -28,12 +33,6 @@ options:
     save_snapshots: true
     draw_box: true
     fuzzy_match: .8
-  plate_recognizer:
-    enabled: true
-    token:
-    regions: []
-  code_project:
-    enabled: false
 schema:
   log_level: list(NOTSET|DEBUG|INFO|WARN|ERROR|CRITICAL)?
   frigate_url: url
@@ -56,14 +55,12 @@ schema:
     save_snapshots: bool?
     draw_box: bool?
     fuzzy_match: float?
-  plate_recognizer:
-    enabled: bool?
-    token: password?
-    regions: 
-      - str?
-  code_project:
-    enabled: bool?
-    api_url: url?
+  plate_recognizer_enabled: bool
+  plate_recognizer_regions:
+    - str?
+  plate_recognizer_token: password?
+  code_project_enabled: bool
+  code_project_api_url: password?
   
 services:
   - "mqtt:need"
