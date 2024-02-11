@@ -25,6 +25,9 @@ export save_snapshots="$(bashio::config 'frigate.save_snapshots')"
 export draw_box="$(bashio::config 'frigate.draw_box')"
 export pr_token="$(bashio::config 'plate_recognizer.token')"
 export cpai_url="$(bashio::config 'code_project.api_url')"
+export fuzzy_match="$(bashio::config 'frigate.fuzzy_match')"
+declare -a watched_plates
+watched_plates+=($(bashio::config 'watched_plates'))
 declare -a regions
 regions+=($(bashio::config 'plate_recognizer.regions'))
 
@@ -70,6 +73,8 @@ yq --inplace e '.frigate.frigate_plus = true' "${OWN_CONFIG_PATH}"
 fi
 
 yq --inplace e '.frigate.min_score = env(min_score)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.fuzzy_match = env(fuzzy_match)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.always_save_snapshot = env(always_save_snapshot)' "${OWN_CONFIG_PATH}"
 yq --inplace e '.frigate.save_snapshots = env(save_snapshots)' "${OWN_CONFIG_PATH}"
 yq --inplace e '.frigate.draw_box = env(draw_box)' "${OWN_CONFIG_PATH}"
 
