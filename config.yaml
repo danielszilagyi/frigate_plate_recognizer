@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer - testing"
 description: "Tags license plates with ALPR"
-version: "1.0.3c"
+version: "1.0.3d"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -8,7 +8,6 @@ arch:
   - amd64
   - armv7
 options:
-  logger_level: INFO
   configpath: /data/config.yml
   dbpath: /data/frigate_plate_recognizer.db
   logfile: /data/frigate_plate_recognizer.log
@@ -33,7 +32,6 @@ options:
     regions: [ hu ]
   code_project:
     enabled: false
-    api_url: ""
 
 schema:
   logger_level: list(DEBUG|INFO|WARN|ERROR|CRITICAL)?
