@@ -1,15 +1,16 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=homeassistant/{BUILD_ARCH}-base-python:latest
 FROM ${BUILD_FROM}
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache py3-pip py3-requests py3-paho-mqtt py3-yaml py3-pillow 
+RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev 
 
 COPY index.py .
 COPY Arial.ttf .
 COPY run.sh .
+COPY requirements.txt .
 RUN chmod a+x ./run.sh
-
+RUN pip install -r requirements.txt --no-cache-dir
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
