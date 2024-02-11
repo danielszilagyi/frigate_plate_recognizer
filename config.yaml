@@ -8,13 +8,65 @@ arch:
   - amd64
   - armv7
 options:
+  logger_level: INFO
   configpath: /data/config.yml
   dbpath: /data/frigate_plate_recognizer.db
   logfile: /data/frigate_plate_recognizer.log
   snapshotpath: /data/plates
+  frigate:
+    frigate_url: "http://ccab4aaf-frigate-fa:5000"
+    mqtt_auth: true
+    mqtt_username: mqtt
+    mqtt_password: mqtt
+    mqtt_server: core-mosquitto
+    main_topic: frigate
+    return_topic: plate_recognizer
+    frigate_plus: true
+    camera: []
+    objects: [ car ]
+    min_score: .8
+    save_snapshots: true
+    draw_box: true
+  plate_recognizer:
+    enabled: true
+    token:
+    regions: [ hu ]
+  code_project:
+    enabled: false
+    api_url: ""
+
 schema:
-  configpath: str
+  logger_level: list(DEBUG|INFO|WARN|ERROR|CRITICAL)?
+  configpath: str?
   dbpath: str?
   logfile: str?
   snapshotpath: str?
+  frigate:
+    frigate_url: url?
+    mqtt_auth: bool
+    mqtt_username: str?
+    mqtt_password: str?
+    mqtt_server: str?
+    main_topic: str?
+    return_topic: str?
+    frigate_plus: bool
+    camera: 
+      - str
+    objects:
+      - str
+    min_score: float?
+    save_snapshots: bool?
+    draw_box: bool?
+  plate_recognizer:
+    enabled: bool?
+    token: password?
+    regions: 
+      - str?
+  code_project:
+    enabled: bool?
+    api_url: url?
+  
+services:
+  - "mqtt:need"
+
 
