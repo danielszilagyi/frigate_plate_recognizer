@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer - testing"
 description: "Tags license plates with ALPR"
-version: "1.0.3m"
+version: "1.0.3n"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -13,23 +13,23 @@ options:
   logfile: /data/frigate_plate_recognizer.log
   snapshotpath: /data/plates
   frigate:
-    frigate_url: "http://ccab4aaf-frigate-fa:5000"
+    frigate_url: ""
     mqtt_auth: true
-    mqtt_username: mqtt
-    mqtt_password: mqtt
-    mqtt_server: core-mosquitto
+    mqtt_username: ""
+    mqtt_password: ""
+    mqtt_server: ""
     main_topic: frigate
     return_topic: plate_recognizer
-    frigate_plus: true
+    frigate_plus: ""
     camera: []
-    objects: [ car ]
+    objects: []
     min_score: .8
     save_snapshots: true
     draw_box: true
   plate_recognizer:
     enabled: true
     token:
-    regions: [ hu ]
+    regions: []
   code_project:
     enabled: false
 
@@ -40,14 +40,14 @@ schema:
   logfile: str?
   snapshotpath: str?
   frigate:
-    frigate_url: url?
+    frigate_url: url
     mqtt_auth: bool
     mqtt_username: str?
     mqtt_password: str?
-    mqtt_server: str?
+    mqtt_server: str
     main_topic: str?
     return_topic: str?
-    frigate_plus: bool
+    frigate_plus: bool?
     camera: 
       - str
     objects:
@@ -66,5 +66,3 @@ schema:
   
 services:
   - "mqtt:need"
-
-

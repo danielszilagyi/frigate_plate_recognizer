@@ -9,7 +9,6 @@ COPY index.py .
 COPY Arial.ttf .
 COPY run.sh .
 COPY requirements.txt .
-COPY defconfig.yml .
 RUN chmod a+x ./run.sh
 RUN pip install -r requirements.txt --no-cache-dir
 ARG BUILD_ARCH

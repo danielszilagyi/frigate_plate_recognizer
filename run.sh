@@ -31,7 +31,7 @@ regions+=($(bashio::config 'plate_recognizer.regions'))
 
 # Put config in its place
 if ! bashio::fs.file_exists "${OWN_CONFIG_PATH}"; then
-    cp /usr/src/app/defconfig.yml "${OWN_CONFIG_PATH}"
+    touch "${OWN_CONFIG_PATH}"
 fi
 
 # Set up the app config based on the addon options
