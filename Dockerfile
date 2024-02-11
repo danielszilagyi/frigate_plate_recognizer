@@ -3,7 +3,6 @@ FROM $BUILD_FROM
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt .
 RUN apk add --no-cache py3-pip py3-requests py3-paho-mqtt py3-yaml py3-pillow 
 
 COPY index.py .
