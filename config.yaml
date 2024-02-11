@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer"
 description: "Tags license plates with ALPR"
-version: "1.0.7"
+version: "1.0.8"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -17,6 +17,7 @@ options:
   mqtt_auth: true
   camera: []
   objects: []
+  watched_plates: []
   mqtt_username: ""
   mqtt_password: ""
   mqtt_server: ""
@@ -25,8 +26,10 @@ options:
     return_topic: plate_recognizer
     frigate_plus: ""
     min_score: .8
+    always_save_snapshot: false
     save_snapshots: true
     draw_box: true
+    fuzzy_match: .8
   plate_recognizer:
     enabled: true
     token:
@@ -44,6 +47,8 @@ schema:
   mqtt_auth: bool
   mqtt_username: str?
   mqtt_password: password?
+  watched_plates:
+      - str?
   camera: 
       - str
   objects:
@@ -53,8 +58,10 @@ schema:
     return_topic: str?
     frigate_plus: bool?
     min_score: float?
+    always_save_snapshot: bool?
     save_snapshots: bool?
     draw_box: bool?
+    fuzzy_match: float?
   plate_recognizer:
     enabled: bool?
     token: password?
