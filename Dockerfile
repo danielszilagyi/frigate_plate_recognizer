@@ -4,7 +4,7 @@ FROM $BUILD_FROM
 WORKDIR /usr/src/app
 
 COPY requirements.txt .
-RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev
+RUN apk add --no-cache gcc zlib-dev jpeg-dev musl-dev py3-pip
 RUN pip install -r requirements.txt
 
 COPY index.py .
