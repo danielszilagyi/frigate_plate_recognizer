@@ -1,5 +1,5 @@
-ARG BUILD_FROM=homeassistant/amd64-base-python:latest
-FROM $BUILD_FROM
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
 WORKDIR /usr/src/app
 
