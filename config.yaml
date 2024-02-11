@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer"
 description: "Tags license plates with ALPR"
-version: "1.0.8a"
+version: "1.0.8b"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -36,10 +36,6 @@ options:
     enabled: false
 schema:
   log_level: list(NOTSET|DEBUG|INFO|WARN|ERROR|CRITICAL)?
-  configpath: str?
-  dbpath: str?
-  logfile: str?
-  snapshotpath: str?
   frigate_url: url
   mqtt_server: str
   mqtt_auth: bool
