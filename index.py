@@ -112,12 +112,12 @@ def code_project(image):
 
 def plate_recognizer(image):
     global last_api_call_time
-    # Wait until the minimum interval (2 seconds) has passed since the last API call
+    # Wait until the minimum interval (5 seconds) has passed since the last API call
     with api_call_lock:
         time_since_last_call = time.time() - last_api_call_time
-        if time_since_last_call < 2:
+        if time_since_last_call < 5:
             _LOGGER.warning("Rate limit reached. Waiting before making another API call.")
-            time.sleep(2 - time_since_last_call)
+            time.sleep(5)
         # Update the last_api_call_time variable
         last_api_call_time = time.time()
 
