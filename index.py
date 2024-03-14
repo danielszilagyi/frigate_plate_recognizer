@@ -118,8 +118,6 @@ def plate_recognizer(image):
         if time_since_last_call < 5:
             _LOGGER.warning("Rate limit reached. Waiting before making another API call.")
             time.sleep(5)
-        # Update the last_api_call_time variable
-        last_api_call_time = time.time()
 
     api_url = config['plate_recognizer'].get('api_url') or PLATE_RECOGIZER_BASE_URL
     token = config['plate_recognizer']['token']
@@ -130,6 +128,9 @@ def plate_recognizer(image):
         files=dict(upload=image),
         headers={'Authorization': f'Token {token}'}
     )
+
+    # Update the last_api_call_time variable
+    last_api_call_time = time.time()
 
     response = response.json()
     _LOGGER.debug(f"response: {response}")
