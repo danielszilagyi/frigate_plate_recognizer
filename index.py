@@ -115,9 +115,9 @@ def plate_recognizer(image):
     # Wait until the minimum interval (5 seconds) has passed since the last API call
     with api_call_lock:
         time_since_last_call = time.time() - last_api_call_time
-        if time_since_last_call < 5:
+        if time_since_last_call < 2:
             _LOGGER.warning("Rate limit reached. Waiting before making another API call.")
-            time.sleep(5)
+            time.sleep(1)
 
     api_url = config['plate_recognizer'].get('api_url') or PLATE_RECOGIZER_BASE_URL
     token = config['plate_recognizer']['token']
