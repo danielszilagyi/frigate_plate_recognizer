@@ -1,6 +1,6 @@
 name: "Frigate Plate Recognizer"
 description: "Tags license plates with ALPR"
-version: "1.0.15"
+version: "1.0.16"
 slug: "frigate_alpr"
 init: false
 arch:
@@ -29,10 +29,12 @@ options:
     return_topic: plate_recognizer
     frigate_plus: ""
     min_score: .8
+    license_plate_min_score: 0
     always_save_snapshot: false
     save_snapshots: true
     draw_box: true
     fuzzy_match: .8
+    max_attempts: 3
 schema:
   log_level: list(NOTSET|DEBUG|INFO|WARN|ERROR|CRITICAL)?
   frigate_url: url
@@ -51,10 +53,12 @@ schema:
     return_topic: str?
     frigate_plus: bool?
     min_score: float?
+    license_plate_min_score: float?
     always_save_snapshot: bool?
     save_snapshots: bool?
     draw_box: bool?
     fuzzy_match: float?
+    max_attempts: float?
   plate_recognizer_enabled: bool
   plate_recognizer_regions:
     - str?
