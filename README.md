@@ -157,8 +157,4 @@ frigate:
 
 If a watched plate is found in the list of candidates plates returned by plate-recognizer / CP.AI, the response will be updated to use that plate and it's score. The original plate will be added to the MQTT response as an additional `original_plate` field.
 
-<<<<<<< HEAD
 If no candidates match and fuzzy_match is enabled with a value, the recognized plate is compared against each of the watched_plates using fuzzy matching. If a plate is found with a score > fuzzy_match, the response will be updated with that plate. The original plate and the associated fuzzy_score will be added to the MQTT response as additional fields `original_plate` and `fuzzy_score`.
-=======
-If no candidates match and fuzzy_match is enabled with a value, the recognized plate is compared against each of the watched_plates using fuzzy matching. If a plate is found with a score > fuzzy_match, the response will be updated with that plate. The original plate and the associated fuzzy_score will be added to the MQTT response as additional fields `original_plate` and `fuzzy_score`.
->>>>>>> 11f2d85e62f357fe7acd987a716fea43a31eeb15
