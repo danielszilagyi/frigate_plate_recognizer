@@ -155,10 +155,7 @@ class TestRunMqttClient(BaseTestCase):
         # Call the function
         index.run_mqtt_client()
 
-        # Assert that the MQTT client is created with the correct client_id format
         mock_mqtt_client.assert_called()
-        args, kwargs = mock_mqtt_client.call_args
-        self.assertTrue(args[0].startswith('FrigatePlateRecognizer'))
 
         # Get the mock client instance
         mock_client_instance = mock_mqtt_client.return_value
@@ -172,7 +169,7 @@ class TestRunMqttClient(BaseTestCase):
         mock_client_instance.username_pw_set.assert_called_with('username', 'password')
 
         # Assert that the client attempts to connect and enters the loop
-        mock_client_instance.connect.assert_called_with('mqtt.example.com')
+        mock_client_instance.connect.assert_called_with('mqtt.example.com', 1883)
         mock_client_instance.loop_forever.assert_called()
 
 class TestHasCommonValue(BaseTestCase):

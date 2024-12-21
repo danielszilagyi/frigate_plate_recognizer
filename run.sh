@@ -3,7 +3,7 @@
 CONFIG_PATH=/data/options.json
 
 # Set up env variables for index.py, use shared addon_data for now (same path with app originally)
-export OWN_CONFIG_PATH="/config/config.yml"
+export CONFIG_PATH="/config/config.yml"
 export DB_PATH="/config/frigate_plate_recognizer.db"
 export LOG_FILE="/config/frigate_plate_recognizer.log"
 export SNAPSHOT_PATH="/config/plates"
@@ -34,72 +34,72 @@ regions+=($(bashio::config 'plate_recognizer_regions'))
 
 
 # Put config in its place
-if ! bashio::fs.file_exists "${OWN_CONFIG_PATH}"; then
-    touch "${OWN_CONFIG_PATH}"
+if ! bashio::fs.file_exists "${CONFIG_PATH}"; then
+    touch "${CONFIG_PATH}"
 fi
 
 # Set up the app config based on the addon options
-yq --inplace e '.logger_level = env(log_level)' "${OWN_CONFIG_PATH}"
-yq --inplace e '.frigate.frigate_url = env(frigate_url)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.logger_level = env(log_level)' "${CONFIG_PATH}"
+yq --inplace e '.frigate.frigate_url = env(frigate_url)' "${CONFIG_PATH}"
 
-yq --inplace e '.frigate.camera = []' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.camera = []' "${CONFIG_PATH}"
   for cam in "${camera[@]}"; do
     cam="${cam}" yq --inplace e \
-      '.frigate.camera += [env(cam)]' "${OWN_CONFIG_PATH}" \
+      '.frigate.camera += [env(cam)]' "${CONFIG_PATH}" \
         || bashio::exit.nok 'Failed updating camera list'
   done
 
-yq --inplace e '.frigate.objects = []' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.objects = []' "${CONFIG_PATH}"
   for obj in "${objects[@]}"; do
     obj="${obj}" yq --inplace e \
-      '.frigate.objects += [env(obj)]' "${OWN_CONFIG_PATH}" \
+      '.frigate.objects += [env(obj)]' "${CONFIG_PATH}" \
         || bashio::exit.nok 'Failed updating object list'
   done
 
-yq --inplace e '.frigate.watched_plates = []' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.watched_plates = []' "${CONFIG_PATH}"
   for plate in "${watched_plates[@]}"; do
     plate="${plate}" yq --inplace e \
-      '.frigate.watched_plates += [env(plate)]' "${OWN_CONFIG_PATH}" \
+      '.frigate.watched_plates += [env(plate)]' "${CONFIG_PATH}" \
         || bashio::exit.nok 'Failed updating watched plates list'
   done
 
-yq --inplace e '.frigate.mqtt_server = env(mqtt_server)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.mqtt_server = env(mqtt_server)' "${CONFIG_PATH}"
 
 if $(bashio::config 'mqtt_auth'); then
     
-    yq --inplace e '.frigate.mqtt_auth = true' "${OWN_CONFIG_PATH}"
-    yq --inplace e '.frigate.mqtt_username = env(mqtt_username)' "${OWN_CONFIG_PATH}"
-    yq --inplace e '.frigate.mqtt_password = env(mqtt_password)' "${OWN_CONFIG_PATH}"
+    yq --inplace e '.frigate.mqtt_auth = true' "${CONFIG_PATH}"
+    yq --inplace e '.frigate.mqtt_username = env(mqtt_username)' "${CONFIG_PATH}"
+    yq --inplace e '.frigate.mqtt_password = env(mqtt_password)' "${CONFIG_PATH}"
 
 fi
 
-yq --inplace e '.frigate.main_topic = env(main_topic)' "${OWN_CONFIG_PATH}"
-yq --inplace e '.frigate.return_topic = env(return_topic)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.main_topic = env(main_topic)' "${CONFIG_PATH}"
+yq --inplace e '.frigate.return_topic = env(return_topic)' "${CONFIG_PATH}"
 
 if $(bashio::config 'frigate.frigate_plus'); then
-yq --inplace e '.frigate.frigate_plus = true' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.frigate_plus = true' "${CONFIG_PATH}"
 fi
 
-yq --inplace e '.frigate.min_score = env(min_score)' "${OWN_CONFIG_PATH}"
-yq --inplace e '.frigate.fuzzy_match = env(fuzzy_match)' "${OWN_CONFIG_PATH}"
-yq --inplace e '.frigate.always_save_snapshot = env(always_save_snapshot)' "${OWN_CONFIG_PATH}"
-yq --inplace e '.frigate.save_snapshots = env(save_snapshots)' "${OWN_CONFIG_PATH}"
-yq --inplace e '.frigate.draw_box = env(draw_box)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.frigate.min_score = env(min_score)' "${CONFIG_PATH}"
+yq --inplace e '.frigate.fuzzy_match = env(fuzzy_match)' "${CONFIG_PATH}"
+yq --inplace e '.frigate.always_save_snapshot = env(always_save_snapshot)' "${CONFIG_PATH}"
+yq --inplace e '.frigate.save_snapshots = env(save_snapshots)' "${CONFIG_PATH}"
+yq --inplace e '.frigate.draw_box = env(draw_box)' "${CONFIG_PATH}"
 
 # Plate recognizer
 if $(bashio::config 'plate_recognizer_enabled'); then
-yq --inplace e '.plate_recognizer.token = env(pr_token)' "${OWN_CONFIG_PATH}"
-yq --inplace e '.plate_recognizer.regions = []' "${OWN_CONFIG_PATH}"
+yq --inplace e '.plate_recognizer.token = env(pr_token)' "${CONFIG_PATH}"
+yq --inplace e '.plate_recognizer.regions = []' "${CONFIG_PATH}"
   for reg in "${regions[@]}"; do
     reg="${reg}" yq --inplace e \
-      '.plate_recognizer.regions += [env(reg)]' "${OWN_CONFIG_PATH}" \
+      '.plate_recognizer.regions += [env(reg)]' "${CONFIG_PATH}" \
         || bashio::exit.nok 'Failed updating region list'
   done
 fi
 
 # CP.AI
 if $(bashio::config 'code_project_enabled'); then
-yq --inplace e '.code_project.api_url = env(cpai_url)' "${OWN_CONFIG_PATH}"
+yq --inplace e '.code_project.api_url = env(cpai_url)' "${CONFIG_PATH}"
 fi
 
 
