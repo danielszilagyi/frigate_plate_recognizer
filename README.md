@@ -6,7 +6,7 @@ as an add-on with Home Assistant Operating System.
 The script's YAML config has been mapped to the Addon configuration menu, need to add the necessary parameters before the addon could start. 
 The formatting is the same as the original config (camera, objects and regions are list)
 
-There is also a modification to never call the Plate Recognizer API more frequently than 2 sec as I saw API errors with rate limited to 1 second.
+The addon is now using the python script without any modifications.
 
 # Frigate Plate Recognizer
 
