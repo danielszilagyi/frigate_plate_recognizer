@@ -131,7 +131,7 @@ def plate_recognizer(image, retries=3, delay=1):
             delay *= 2  # Exponential backoff
             continue
 
-        if response.status_code != 200:
+        if response.status_code != 201:
             _LOGGER.error(f"API error: {response.status_code}, {response.text}")
             return None, None, None, None
 
