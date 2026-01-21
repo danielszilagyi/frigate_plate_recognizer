@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 COPY index.py Arial.ttf run.sh requirements.txt /usr/src/app/
 
 RUN \
-    apk add --no-cache gcc=13.2.1_git20231014-r0 zlib-dev=1.3.1-r0 jpeg-dev=9e-r1 musl-dev=1.2.4_git20230717-r4 freetype-dev=2.13.2-r0 yq \
+    apk add --no-cache gcc=13.2.1_git20231014-r0 zlib-dev=1.3.1-r0 jpeg-dev=9e-r1 musl-dev=1.2.4_git20230717-r5 freetype-dev=2.13.2-r0 yq \
     && chmod a+x ./run.sh \
     && pip install -r requirements.txt --no-cache-dir 
 ARG BUILD_ARCH
